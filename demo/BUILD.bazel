@@ -1,0 +1,26 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "demo_lib",
+    srcs = [
+        "gofindthemtagger.go",
+        "main.go",
+    ],
+    importpath = "github.com/pedroegsilva/certificate-transparency-demo/demo",
+    visibility = ["//visibility:private"],
+    deps = [
+        "@com_github_calidog_certstream_go//:certstream-go",
+        "@com_github_pedroegsilva_gofindthem//finder",
+        "@com_github_pedroegsilva_gotagthem//tagger",
+        "@com_github_pkg_errors//:errors",
+        "@com_github_rs_zerolog//:zerolog",
+        "@com_github_rs_zerolog//log",
+        "@com_github_rs_zerolog//pkgerrors",
+    ],
+)
+
+go_binary(
+    name = "demo",
+    embed = [":demo_lib"],
+    visibility = ["//visibility:public"],
+)
